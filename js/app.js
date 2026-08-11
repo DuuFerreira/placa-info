@@ -2,7 +2,7 @@ const btnConsultar = document.getElementById("btnConsultar");
 const inputPlaca = document.getElementById("placa");
 const mensagem = document.getElementById("mensagem");
 
-btnConsultar.addEventListener("click", function () {
+btnConsultar.addEventListener("click", async function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
     const placa = inputPlaca.value.trim().toUpperCase();
 
@@ -19,6 +19,9 @@ btnConsultar.addEventListener("click", function () {
         return;
     }
     mensagem.textContent = "";
-    console.log("Placa válida:", placa);
+
+    const resposta = await fetch("data/db.json");
+    const dados = await resposta.json();
+    console.log(dados)
 
 });
