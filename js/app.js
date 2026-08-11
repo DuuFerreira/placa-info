@@ -1,5 +1,6 @@
 const btnConsultar = document.getElementById("btnConsultar");
 const inputPlaca = document.getElementById("placa");
+const mensagem = document.getElementById("mensagem");
 
 btnConsultar.addEventListener("click", function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
@@ -11,12 +12,13 @@ btnConsultar.addEventListener("click", function () {
 
     //Testa se o modelo digitado pelo usuário é um dos dois modelos válidos:
     const placaValida = placaAntiga.test(placa) || placaMercosul.test(placa);
-    
+
     if (!placaValida) {
-        console.log("Placa inválida");
+        mensagem.textContent = "Digite uma placa válida.";
+        mensagem.className = "mt-3 text-danger";
         return;
     }
-
+    mensagem.textContent = "";
     console.log("Placa válida:", placa);
 
 });
