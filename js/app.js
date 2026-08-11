@@ -22,6 +22,17 @@ btnConsultar.addEventListener("click", async function () {
 
     const resposta = await fetch("data/db.json");
     const dados = await resposta.json();
-    console.log(dados)
+
+    const veiculo = dados.veiculos.find(function (veiculo) {
+        return veiculo.placa === placa;
+    });
+
+    if (!veiculo) {
+        mensagem.textContent = "Veículo não encontrado.";
+        mensagem.className = "mt-3 text-warning";
+        return;
+    }
+
+    console.log(veiculo)
 
 });
