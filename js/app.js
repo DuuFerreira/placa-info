@@ -1,6 +1,7 @@
 const btnConsultar = document.getElementById("btnConsultar");
 const inputPlaca = document.getElementById("placa");
 const mensagem = document.getElementById("mensagem");
+const resultado = document.getElementById("resultado");
 
 btnConsultar.addEventListener("click", async function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
@@ -18,7 +19,9 @@ btnConsultar.addEventListener("click", async function () {
         mensagem.className = "mt-3 text-danger";
         return;
     }
+
     mensagem.textContent = "";
+    resultado.classList.add("d-none");
 
     const resposta = await fetch("data/db.json");
     const dados = await resposta.json();
@@ -33,6 +36,12 @@ btnConsultar.addEventListener("click", async function () {
         return;
     }
 
-    console.log(veiculo)
+    document.getElementById("marca").textContent = veiculo.marca;
+    document.getElementById("modelo").textContent = veiculo.modelo;
+    document.getElementById("ano").textContent = veiculo.anoModelo;
+    document.getElementById("cor").textContent = veiculo.cor;
+    document.getElementById("combustivel").textContent = veiculo.combustivel;
+
+    resultado.classList.remove("d-none");
 
 });
