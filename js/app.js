@@ -23,25 +23,34 @@ btnConsultar.addEventListener("click", async function () {
     mensagem.textContent = "";
     resultado.classList.add("d-none");
 
-    const resposta = await fetch("data/db.json");
-    const dados = await resposta.json();
+    try {
+        const resposta = await fetch("data/db.json");
+        const dados = await resposta.json();
 
-    const veiculo = dados.veiculos.find(function (veiculo) {
-        return veiculo.placa === placa;
-    });
+        const veiculo = dados.veiculos.find(function (veiculo) {
+            return veiculo.placa === placa;
+        });
 
-    if (!veiculo) {
-        mensagem.textContent = "Veículo não encontrado.";
-        mensagem.className = "mt-3 text-warning";
-        return;
-    }
+        if (!veiculo) {
+            mensagem.textContent = "Veículo não encontrado.";
+            mensagem.className = "mt-3 text-warning";
+            return;
+        }
 
-    document.getElementById("marca").textContent = veiculo.marca;
-    document.getElementById("modelo").textContent = veiculo.modelo;
-    document.getElementById("ano").textContent = veiculo.anoModelo;
-    document.getElementById("cor").textContent = veiculo.cor;
-    document.getElementById("combustivel").textContent = veiculo.combustivel;
+        document.getElementById("marca").textContent = veiculo.marca;
+        document.getElementById("modelo").textContent = veiculo.modelo;
+        document.getElementById("ano").textContent = veiculo.anoModelo;
+        document.getElementById("cor").textContent = veiculo.cor;
+        document.getElementById("combustivel").textContent = veiculo.combustivel;
 
     resultado.classList.remove("d-none");
+    } catch (error) {
+        mensagem.textContent = "Não foi possível consultar os dados. Tente novamente.";
+        mensagem.className = "mt-3 text-danger";
+
+        console.error(erro);
+    }
+
+    
 
 });
