@@ -25,6 +25,11 @@ btnConsultar.addEventListener("click", async function () {
 
     try {
         const resposta = await fetch("data/db.json");
+
+        if (!resposta.ok) {
+           throw new Error("Erro ao carregar os dados.");
+        }
+        
         const dados = await resposta.json();
 
         const veiculo = dados.veiculos.find(function (veiculo) {
@@ -48,7 +53,7 @@ btnConsultar.addEventListener("click", async function () {
         mensagem.textContent = "Não foi possível consultar os dados. Tente novamente.";
         mensagem.className = "mt-3 text-danger";
 
-        console.error(erro);
+        console.error(error);
     }
 
     
