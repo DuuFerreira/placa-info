@@ -3,6 +3,14 @@ const inputPlaca = document.getElementById("placa");
 const mensagem = document.getElementById("mensagem");
 const resultado = document.getElementById("resultado");
 
+function mostrarMensagem(texto, tipo) {
+    mensagem.innerHTML = `
+        <div class="alert alert-${tipo}" role="alert">
+            ${texto}
+        </div>
+    `;
+}
+
 btnConsultar.addEventListener("click", async function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
     const placa = inputPlaca.value.trim().toUpperCase();
@@ -15,8 +23,7 @@ btnConsultar.addEventListener("click", async function () {
     const placaValida = placaAntiga.test(placa) || placaMercosul.test(placa);
 
     if (!placaValida) {
-        mensagem.textContent = "Digite uma placa válida.";
-        mensagem.className = "mt-3 text-danger";
+        mostrarMensagem("Digite uma placa válida.", "danger");
         return;
     }
 
@@ -48,7 +55,7 @@ btnConsultar.addEventListener("click", async function () {
         document.getElementById("cor").textContent = veiculo.cor;
         document.getElementById("combustivel").textContent = veiculo.combustivel;
 
-    resultado.classList.remove("d-none");
+        resultado.classList.remove("d-none");
     } catch (error) {
         mensagem.textContent = "Não foi possível consultar os dados. Tente novamente.";
         mensagem.className = "mt-3 text-danger";
