@@ -11,6 +11,10 @@ function mostrarMensagem(texto, tipo) {
     `;
 }
 
+function limparMensagem() {
+    mensagem.innerHTML = "";
+}
+
 btnConsultar.addEventListener("click", async function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
     const placa = inputPlaca.value.trim().toUpperCase();
@@ -27,8 +31,15 @@ btnConsultar.addEventListener("click", async function () {
         return;
     }
 
-    mensagem.textContent = "";
+    //Limpa mensagens e resultados anteriores.
+    limparMensagem();
     resultado.classList.add("d-none");
+
+    //Prepara o botão para consulta
+    btnConsultar.disabled = true;
+
+    //Mostra o loading
+    mostrarMensagem("Consultando veículo...", "info");
 
     try {
         const resposta = await fetch("data/db.json");
@@ -44,8 +55,7 @@ btnConsultar.addEventListener("click", async function () {
         });
 
         if (!veiculo) {
-            mensagem.textContent = "Veículo não encontrado.";
-            mensagem.className = "mt-3 text-warning";
+            mostrarMensagem("Veículo não encontrado.", "warning");
             return;
         }
 
@@ -56,13 +66,16 @@ btnConsultar.addEventListener("click", async function () {
         document.getElementById("combustivel").textContent = veiculo.combustivel;
 
         resultado.classList.remove("d-none");
+
+        //Limpa o loading quando há sucesso na consulta:
+        limparMensagem();
+
     } catch (error) {
-        mensagem.textContent = "Não foi possível consultar os dados. Tente novamente.";
-        mensagem.className = "mt-3 text-danger";
+        mostrarMensagem("Não foi posível consultar os dados. Tente novamente.", "danger");
 
         console.error(error);
+    } finally {
+        // Reativa o botão independente do resultado
+        btnConsultar.disabled = false;
     }
-
-    
-
 });
