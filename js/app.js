@@ -15,6 +15,54 @@ function limparMensagem() {
     mensagem.innerHTML = "";
 }
 
+async function buscarVeiculo(placa) {
+
+    const resposta = await fetch("data/db.json");
+
+    if (!resposta.ok) {
+        throw new Error("Não foi possível carregar os dados do servidor.");
+    }
+
+    const dados = await resposta.json();
+
+    if (!dados.veiculos || !Array.isArray(dados.veiculos)) {
+        throw new Error("Formato dos dados inválido.");
+    }
+
+    const veiculo = dados.veiculos.find(function (veiculo) {
+        return veiculo.placa === placa;
+    });
+
+    return veiculo;
+}
+
+function mostrarResultado(veiculo){
+
+    document.getElementById("marca").textContent = veiculo.marca;
+    document.getElementById("modelo").textContent = veiculo.modelo;
+    document.getElementById("versao").textContent = veiculo.versao;
+    document.getElementById("ano").textContent = veiculo.anoModelo;
+    document.getElementById("motor").textContent = veiculo.motor;
+    document.getElementById("cambio").textContent = veiculo.cambio;
+    document.getElementById("cor").textContent = veiculo.cor;
+    document.getElementById("combustivel").textContent = veiculo.combustivel;
+
+    resultado.classList.remove("d-none");
+}
+
+function limparResultado() {
+    document.getElementById("marca").textContent = "";
+    document.getElementById("modelo").textContent = "";
+    document.getElementById("versao").textContent = "";
+    document.getElementById("ano").textContent = "";
+    document.getElementById("motor").textContent = "";
+    document.getElementById("cambio").textContent = "";
+    document.getElementById("cor").textContent = "";
+    document.getElementById("combustivel").textContent = "";
+
+    resultado.classList.add("d-none");
+}
+
 btnConsultar.addEventListener("click", async function () {
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
     const placa = inputPlaca.value.trim().toUpperCase();
@@ -33,7 +81,7 @@ btnConsultar.addEventListener("click", async function () {
 
     //Limpa mensagens e resultados anteriores.
     limparMensagem();
-    resultado.classList.add("d-none");
+    limparResultado();
 
     //Prepara o botão para consulta
     btnConsultar.disabled = true;
@@ -42,30 +90,15 @@ btnConsultar.addEventListener("click", async function () {
     mostrarMensagem("Consultando veículo...", "info");
 
     try {
-        const resposta = await fetch("data/db.json");
-
-        if (!resposta.ok) {
-           throw new Error("Não foi possível carregar os dados do servidor.");
-        }
         
-        const dados = await resposta.json();
-
-        const veiculo = dados.veiculos.find(function (veiculo) {
-            return veiculo.placa === placa;
-        });
+        const veiculo = await buscarVeiculo(placa);
 
         if (!veiculo) {
             mostrarMensagem("Veículo não encontrado.", "warning");
             return;
         }
 
-        document.getElementById("marca").textContent = veiculo.marca;
-        document.getElementById("modelo").textContent = veiculo.modelo;
-        document.getElementById("ano").textContent = veiculo.anoModelo;
-        document.getElementById("cor").textContent = veiculo.cor;
-        document.getElementById("combustivel").textContent = veiculo.combustivel;
-
-        resultado.classList.remove("d-none");
+        mostrarResultado(veiculo);
 
         //Limpa o loading quando há sucesso na consulta:
         limparMensagem();
