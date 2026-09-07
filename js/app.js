@@ -45,7 +45,7 @@ btnConsultar.addEventListener("click", async function () {
         const resposta = await fetch("data/db.json");
 
         if (!resposta.ok) {
-           throw new Error("Erro ao carregar os dados.");
+           throw new Error("Não foi possível carregar os dados do servidor.");
         }
         
         const dados = await resposta.json();
@@ -71,9 +71,9 @@ btnConsultar.addEventListener("click", async function () {
         limparMensagem();
 
     } catch (error) {
-        mostrarMensagem("Não foi posível consultar os dados. Tente novamente.", "danger");
+        mostrarMensagem("Não foi possível consultar os dados. Tente novamente.", "danger");
 
-        console.error(error);
+        console.error("Erro na consulta:", error);
     } finally {
         // Reativa o botão independente do resultado
         btnConsultar.disabled = false;
