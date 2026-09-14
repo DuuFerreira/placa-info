@@ -63,7 +63,8 @@ function limparResultado() {
     resultado.classList.add("d-none");
 }
 
-btnConsultar.addEventListener("click", async function () {
+async function consultarPlaca() {
+
     //O método .trim() remove espaços em branco e quebras de linha das extremidades de uma string
     const placa = inputPlaca.value.trim().toUpperCase();
 
@@ -111,4 +112,14 @@ btnConsultar.addEventListener("click", async function () {
         // Reativa o botão independente do resultado
         btnConsultar.disabled = false;
     }
+}
+
+btnConsultar.addEventListener("click", consultarPlaca);
+
+inputPlaca.addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+        consultarPlaca();
+    }
+
 });
