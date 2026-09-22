@@ -38,6 +38,7 @@ async function buscarVeiculo(placa) {
 
 function mostrarResultado(veiculo){
 
+    document.getElementById("numeroPlaca").textContent = veiculo.placa;
     document.getElementById("marca").textContent = veiculo.marca;
     document.getElementById("modelo").textContent = veiculo.modelo;
     document.getElementById("versao").textContent = veiculo.versao;
@@ -51,6 +52,8 @@ function mostrarResultado(veiculo){
 }
 
 function limparResultado() {
+
+    document.getElementById("placa").textContent = "";
     document.getElementById("marca").textContent = "";
     document.getElementById("modelo").textContent = "";
     document.getElementById("versao").textContent = "";
