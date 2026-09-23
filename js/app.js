@@ -103,6 +103,7 @@ async function consultarPlaca() {
         }
 
         mostrarResultado(veiculo);
+        inputPlaca.value=""
 
         //Limpa o loading quando há sucesso na consulta:
         limparMensagem();
