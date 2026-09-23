@@ -1,5 +1,5 @@
 body {
-    background-color: #4192fc;
+    background-color: #3D8BFD;
 }
 
 .placa {
@@ -49,4 +49,20 @@ main {
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+#placa {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#placa:focus {
+    outline: none;
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 0 4px rgba(61, 139, 253, 0.3),
+        0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+main:hover {
+    transform: translateY(-1px);
 }
