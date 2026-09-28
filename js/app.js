@@ -80,6 +80,7 @@ async function consultarPlaca() {
 
     if (!placaValida) {
         mostrarMensagem("Digite uma placa válida.", "danger");
+        limparResultado();
         return;
     }
 
