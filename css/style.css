@@ -1,5 +1,5 @@
 body {
-    background-color: #3D8BFD;
+    background-color: #b8cce3;
 }
 
 .placa {
@@ -44,12 +44,6 @@ body {
     opacity: 1;
 }
 
-main {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
 
 #placa {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -63,6 +57,6 @@ main {
         0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-main:hover {
-    transform: translateY(-1px);
+.resultado-item {
+    background-color: #f1f6fb;
 }
